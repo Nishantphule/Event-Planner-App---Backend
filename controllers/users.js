@@ -8,9 +8,9 @@ const User = require("../models/User");
 const userController = {
     register: async (req, res) => {
         try {
-            const { fullname, username, role, topics, email, password } = req.body;
+            const { fullname, username, emailId, mobileNo, password } = req.body;
 
-            const existingUserEmail = await User.findOne({ emailId: email });
+            const existingUserEmail = await User.findOne({ emailId });
             const existingUserName = await User.findOne({ username });
 
             if (existingUserEmail) {
@@ -22,33 +22,19 @@ const userController = {
             else {
                 const saltRounds = 10;
                 const hashedPassword = await bcrypt.hash(password, saltRounds);
-                if (role === "mentor") {
-                    const user = new User({
-                        fullname,
-                        username,
-                        role,
-                        topics,
-                        emailId: email,
-                        password: hashedPassword
-                    })
 
-                    const savedUser = await user.save()
-                    // res.send({ "message": "Successful Registeration", token: token })
-                    res.status(201).json({ message: 'Successful Registeration', user: savedUser });
-                }
-                else {
-                    const user = new User({
-                        fullname,
-                        username,
-                        role,
-                        emailId: email,
-                        password: hashedPassword
-                    })
+                const user = new User({
+                    fullname,
+                    username,
+                    emailId,
+                    mobileNo,
+                    password: hashedPassword
+                })
 
-                    const savedUser = await user.save()
-                    // res.send({ "message": "Successful Registeration", token: token })
-                    res.status(201).json({ message: 'Successful Registeration', user: savedUser });
-                }
+                const savedUser = await user.save()
+                // res.send({ "message": "Successful Registeration", token: token })
+                res.status(201).json({ message: 'Successful Registeration', user: savedUser });
+
 
             }
 
@@ -58,9 +44,9 @@ const userController = {
     },
     login: async (req, res) => {
         try {
-            const { email, password } = req.body;
+            const { data, password } = req.body;
 
-            const user = await User.findOne({ emailId: email });
+            const user = await User.findOne({ emailId: data }) || await User.findOne({ username: data });
 
             if (!user) {
                 res.status(400).send({ message: "Invalid Credentials" })

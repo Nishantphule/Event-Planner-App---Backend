@@ -10,15 +10,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
+    emailId: {
         type: String,
         required: true
     },
-    topics: {
-        type: Array,
-    },
-    emailId: {
-        type: String,
+    mobileNo: {
+        type: Number,
         required: true
     },
     password: {
