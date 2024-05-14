@@ -4,6 +4,7 @@ const config = require('./utils/config');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postsRouter');
+const paymentRouter = require('./routes/paymentRoutes');
 
 // create an express app
 const app = express();
@@ -33,6 +34,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/users', userRouter)
+app.use('/order', paymentRouter);
 app.use('/posts', postRouter)
 
 // Listen to the PORT for requests
