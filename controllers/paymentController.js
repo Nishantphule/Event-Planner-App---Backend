@@ -31,6 +31,8 @@ const paymentController = {
                 razorpayPaymentId,
                 razorpayOrderId,
                 razorpaySignature,
+                userId,
+                notes
             } = req.body;
 
             // Creating our own digest
@@ -54,6 +56,7 @@ const paymentController = {
                     orderId: razorpayOrderId,
                     paymentId: razorpayPaymentId,
                     signature: razorpaySignature,
+                    userId, notes
                 },
                 success: true,
             });

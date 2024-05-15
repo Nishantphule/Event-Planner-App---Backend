@@ -5,6 +5,8 @@ const paymentSchema = new mongoose.Schema({
         orderId: String,
         paymentId: String,
         signature: String,
+        userId: String,
+        notes: Object
     },
     success: Boolean,
 })

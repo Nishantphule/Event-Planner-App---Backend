@@ -30,7 +30,7 @@ mongoose.connect(config.MONGO_URL)
 
 // root end point: prints Welcome sms as an HTML
 app.get('/', (request, response) => {
-    response.send('<h1>Welcome to Cybernetics Backend App!</h1>');
+    response.send('<h1>Welcome to Backend App!</h1>');
 });
 
 app.use('/users', userRouter)
