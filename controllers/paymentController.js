@@ -1,7 +1,7 @@
 const Razorpay = require('razorpay');
 const { KEY_ID_RAZORPAY, SECRET_RAZORPAY } = require('../utils/config');
 const crypto = require('crypto');
-const paymentSchema = require("../models/payment")
+const paymentSchema = require("../models/payment");
 
 const paymentController = {
     createOrder: async (req, res) => {
@@ -70,6 +70,18 @@ const paymentController = {
             });
         } catch (error) {
             res.status(500).send({ error });
+        }
+    },
+    search: async (req, res) => {
+        try {
+            const id = req.params.id
+            console.log(id);
+            const bookings = await paymentSchema.find({})
+            console.log(bookings[0].razorpayDetails.userId);
+            const userBookings = bookings.filter(booking => booking.razorpayDetails.userId === id)
+            res.status(201).send({ Bookings: userBookings })
+        } catch (error) {
+            res.status(401).send({ "message": "Server Error" })
         }
     }
 }
